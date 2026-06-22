@@ -226,8 +226,8 @@ export const travelCopy = {
   back: { en: '← Back to home', zh: '← 返回首頁' },
   listTitle: { en: 'All destinations', zh: '所有地區' },
   hint: {
-    en: 'Drag to spin · click a point or destination to fly there.',
-    zh: '拖曳旋轉 · 點擊地點或清單即可前往。',
+    en: 'Drag to spin · scroll to zoom · click a point or destination to fly there.',
+    zh: '拖曳旋轉 · 滾輪縮放 · 點擊地點或清單即可前往。',
   },
   scrollHint: { en: 'Scroll to explore', zh: '向下滾動探索' },
   placeholder: {

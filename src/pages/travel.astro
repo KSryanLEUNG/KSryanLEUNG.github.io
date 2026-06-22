@@ -205,8 +205,10 @@ const cityCount = places.length;
     width: 100%;
     height: 100%;
     cursor: grab;
-    overflow: visible;
+    /* clip so a zoomed-in globe never spills into the layout */
+    overflow: hidden;
     filter: drop-shadow(0 20px 38px var(--globe-shadow));
+    touch-action: none;
   }
   #globe:active {
     cursor: grabbing;
@@ -492,6 +494,9 @@ const cityCount = places.length;
   let dotG: any = null;
   let width = 0;
   let height = 0;
+  let baseScale = 0; // scale that fits the globe to the container at zoom 1
+  let zoomK = 1; // current zoom factor (1 = fit, up to MAX_ZOOM)
+  const MAX_ZOOM = 8;
 
   function center(): [number, number] {
     const r = projection.rotate();
@@ -519,8 +524,16 @@ const cityCount = places.length;
     width = rect.width;
     height = rect.height || rect.width;
     if (!width) return;
+    baseScale = Math.min(width, height) / 2 - 6;
     svg.attr('viewBox', `0 0 ${width} ${height}`);
-    projection.translate([width / 2, height / 2]).scale(Math.min(width, height) / 2 - 6);
+    projection.translate([width / 2, height / 2]).scale(baseScale * zoomK);
+    render();
+  }
+
+  function setZoom(k: number) {
+    if (!baseScale) return;
+    zoomK = clamp(k, 1, MAX_ZOOM);
+    projection.scale(baseScale * zoomK);
     render();
   }
 
@@ -587,7 +600,7 @@ const cityCount = places.length;
     spinRAF = requestAnimationFrame(spinStep);
   }
   function startSpin() {
-    if (spinning || reduceMotion) return;
+    if (spinning || reduceMotion || zoomK > 1.05) return;
     spinning = true;
     spinLast = 0;
     spinRAF = requestAnimationFrame(spinStep);
@@ -605,32 +618,78 @@ const cityCount = places.length;
   container.addEventListener('mouseenter', stopSpin);
   container.addEventListener('mouseleave', scheduleSpin);
 
-  // ── drag to rotate ──────────────────────────────────────
+  // ── drag to rotate · pinch / wheel to zoom ──────────────
+  const pointers = new Map<number, { x: number; y: number }>();
   let dragging = false;
   let lastX = 0;
   let lastY = 0;
+  let pinchDist = 0;
+
+  function pinchDistance() {
+    const pts = [...pointers.values()];
+    return Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+  }
+
   svg.on('pointerdown', (event: any) => {
-    dragging = true;
-    lastX = event.clientX;
-    lastY = event.clientY;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    (event.target as Element).setPointerCapture?.(event.pointerId);
     stopSpin();
+    if (pointers.size === 1) {
+      dragging = true;
+      lastX = event.clientX;
+      lastY = event.clientY;
+    } else if (pointers.size === 2) {
+      dragging = false;
+      pinchDist = pinchDistance();
+    }
   });
+
   window.addEventListener('pointermove', (event: PointerEvent) => {
+    if (!pointers.has(event.pointerId)) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (pointers.size >= 2) {
+      const d = pinchDistance();
+      if (pinchDist) setZoom(zoomK * (d / pinchDist));
+      pinchDist = d;
+      return;
+    }
     if (!dragging) return;
+    // finer rotation the more we are zoomed in
+    const k = 0.3 / zoomK;
     const r = projection.rotate();
     const dx = event.clientX - lastX;
     const dy = event.clientY - lastY;
     lastX = event.clientX;
     lastY = event.clientY;
-    projection.rotate([r[0] + dx * 0.3, clamp(r[1] - dy * 0.3, -90, 90), r[2]]);
+    projection.rotate([r[0] + dx * k, clamp(r[1] - dy * k, -90, 90), r[2]]);
     render();
   });
-  window.addEventListener('pointerup', () => {
-    if (dragging) {
+
+  function releasePointer(event: PointerEvent) {
+    pointers.delete(event.pointerId);
+    if (pointers.size < 2) pinchDist = 0;
+    if (pointers.size === 1) {
+      const p = [...pointers.values()][0];
+      lastX = p.x;
+      lastY = p.y;
+      dragging = true;
+    } else if (pointers.size === 0) {
       dragging = false;
       scheduleSpin();
     }
+  }
+  window.addEventListener('pointerup', releasePointer);
+  window.addEventListener('pointercancel', releasePointer);
+
+  // wheel to zoom (and reset on double-click)
+  svg.on('wheel', (event: any) => {
+    event.preventDefault();
+    stopSpin();
+    setZoom(zoomK * Math.exp(-event.deltaY * 0.0015));
+    scheduleSpin();
   });
+  svg.on('dblclick', () => setZoom(1));
 
   // ── fly the globe to a place ────────────────────────────
   let tweenRAF = 0;
