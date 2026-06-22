@@ -1,0 +1,489 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import { places, travelCopy } from '../data/travel';
+
+const cityCount = places.length;
+const countryCount = new Set(places.map((p) => p.countryLabel.en)).size;
+---
+
+<Layout
+  title="Travel — Ka Sing (Ryan) Leung"
+  description="An interactive map of the places Ka Sing (Ryan) Leung has travelled to."
+>
+  <Nav />
+
+  <main>
+    <section class="travel-head">
+      <div class="wrap">
+        <h2 class="section-title">
+          <span data-lang-en>{travelCopy.title.en}</span><span data-lang-zh>{travelCopy.title.zh}</span>
+        </h2>
+        <p class="tagline">
+          <span data-lang-en>{travelCopy.subtitle.en}</span><span data-lang-zh>{travelCopy.subtitle.zh}</span>
+        </p>
+        <div class="travel-stats">
+          <div class="stat">
+            <span class="stat-num">{countryCount}</span>
+            <span class="stat-label">
+              <span data-lang-en>{travelCopy.stats.countries.en}</span><span data-lang-zh>{travelCopy.stats.countries.zh}</span>
+            </span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">{cityCount}</span>
+            <span class="stat-label">
+              <span data-lang-en>{travelCopy.stats.cities.en}</span><span data-lang-zh>{travelCopy.stats.cities.zh}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="travel-map-section">
+      <div class="wrap">
+        <div class="map-wrap">
+          <svg id="world-map" viewBox="0 0 960 500" role="img" aria-label="World map of visited places"></svg>
+          <p class="map-hint">
+            <span data-lang-en>{travelCopy.hint.en}</span><span data-lang-zh>{travelCopy.hint.zh}</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- hover preview -->
+  <div id="map-tooltip" class="map-tooltip" hidden>
+    <img id="tt-img" alt="" />
+    <div class="tt-text">
+      <strong id="tt-city"></strong>
+      <span id="tt-date"></span>
+    </div>
+  </div>
+
+  <!-- detail modal -->
+  <div id="travel-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <div class="gallery">
+        <img id="gal-main" alt="" />
+        <div class="gallery-nav">
+          <button id="gal-prev" aria-label="Previous">‹</button>
+          <button id="gal-next" aria-label="Next">›</button>
+        </div>
+        <div id="gal-thumbs" class="gallery-thumbs"></div>
+      </div>
+      <div class="modal-body">
+        <h3 id="m-city"></h3>
+        <p id="m-country" class="m-country"></p>
+        <p id="m-date" class="item-period"></p>
+        <p id="m-blurb" class="prose"></p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .travel-head {
+    padding: 72px 0 24px;
+    border-bottom: none;
+  }
+  .travel-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 22px;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    color: var(--text-faint);
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+  .travel-map-section {
+    padding: 12px 0 72px;
+    border-bottom: none;
+  }
+  .map-wrap {
+    position: relative;
+    background: var(--map-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  #world-map {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: grab;
+  }
+  #world-map:active {
+    cursor: grabbing;
+  }
+  .map-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    background: color-mix(in srgb, var(--map-bg) 70%, transparent);
+    padding: 2px 8px;
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  /* map shapes (global selectors target d3-created nodes) */
+  :global(.country) {
+    fill: var(--map-land);
+    stroke: var(--map-stroke);
+    stroke-width: 0.5;
+  }
+  :global(.country.visited) {
+    fill: var(--map-visited);
+  }
+  :global(.dot) {
+    fill: var(--dot);
+    stroke: #fff;
+    stroke-width: 1.5;
+    cursor: pointer;
+    transition: fill 0.15s ease;
+  }
+  :global(.dot.home) {
+    fill: var(--dot-home);
+  }
+  :global(.dot-pulse) {
+    fill: var(--dot);
+    opacity: 0.45;
+    animation: dotpulse 2.4s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes dotpulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(3.4); opacity: 0; }
+  }
+
+  /* hover tooltip */
+  .map-tooltip {
+    position: fixed;
+    z-index: 100;
+    width: 190px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% - 16px));
+  }
+  .map-tooltip img {
+    display: block;
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    background: var(--bg-soft);
+  }
+  .tt-text {
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .tt-text strong {
+    font-size: 0.95rem;
+  }
+  .tt-text span {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+  }
+
+  /* modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 10, 16, 0.62);
+    backdrop-filter: blur(3px);
+  }
+  .modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(720px, 100%);
+    max-height: 88vh;
+    overflow: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 3;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .gallery {
+    position: relative;
+  }
+  #gal-main {
+    display: block;
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    background: var(--bg-soft);
+  }
+  .gallery-nav button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  #gal-prev { left: 10px; }
+  #gal-next { right: 10px; }
+  .gallery-thumbs {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+  .gallery-thumbs img {
+    width: 56px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.6;
+    border: 2px solid transparent;
+  }
+  .gallery-thumbs img.active {
+    opacity: 1;
+    border-color: var(--accent);
+  }
+  .modal-body {
+    padding: 18px 22px 24px;
+  }
+  .modal-body h3 {
+    margin: 0 0 2px;
+    font-size: 1.3rem;
+  }
+  .m-country {
+    margin: 0 0 8px;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 640px) {
+    #gal-main { height: 240px; }
+    .travel-stats { gap: 28px; }
+  }
+</style>
+
+<script>
+  import { geoNaturalEarth1, geoPath } from 'd3-geo';
+  import { select, pointer } from 'd3-selection';
+  import { zoom, zoomIdentity } from 'd3-zoom';
+  import { feature } from 'topojson-client';
+  import { places } from '../data/travel';
+
+  const W = 960;
+  const H = 500;
+  const BASE_R = 5;
+
+  const lang = () => (document.documentElement.getAttribute('data-lang') === 'zh' ? 'zh' : 'en');
+  const t = (o: { en: string; zh: string }) => o[lang()];
+
+  const svg = select<SVGSVGElement, unknown>('#world-map');
+  const root = svg.append('g');
+
+  const projection = geoNaturalEarth1();
+  const path = geoPath(projection);
+
+  // names of visited countries -> highlight
+  const visited = new Set(places.map((p) => p.country));
+
+  let dotSel: any;
+
+  fetch('/data/countries-110m.json')
+    .then((r) => r.json())
+    .then((topo: any) => {
+      const land = feature(topo, topo.objects.countries) as any;
+      projection.fitSize([W, H], land);
+
+      // countries
+      root
+        .append('g')
+        .selectAll('path')
+        .data(land.features)
+        .join('path')
+        .attr('class', (d: any) =>
+          visited.has(d.properties && d.properties.name) ? 'country visited' : 'country'
+        )
+        .attr('d', path as any);
+
+      // pulse + dots
+      const dotsG = root.append('g');
+      dotsG
+        .selectAll('circle.dot-pulse')
+        .data(places)
+        .join('circle')
+        .attr('class', 'dot-pulse')
+        .attr('cx', (d) => projection([d.lon, d.lat])![0])
+        .attr('cy', (d) => projection([d.lon, d.lat])![1])
+        .attr('r', BASE_R)
+        .style('transform-origin', (d) => {
+          const p = projection([d.lon, d.lat])!;
+          return `${p[0]}px ${p[1]}px`;
+        });
+
+      dotSel = dotsG
+        .selectAll('circle.dot')
+        .data(places)
+        .join('circle')
+        .attr('class', (d) => (d.home ? 'dot home' : 'dot'))
+        .attr('cx', (d) => projection([d.lon, d.lat])![0])
+        .attr('cy', (d) => projection([d.lon, d.lat])![1])
+        .attr('r', BASE_R)
+        .on('mouseenter', function (event: any, d: any) {
+          showTooltip(d);
+        })
+        .on('mousemove', (event: any) => moveTooltip(event))
+        .on('mouseleave', hideTooltip)
+        .on('click', (event: any, d: any) => {
+          event.stopPropagation();
+          openModal(d);
+        });
+
+      // zoom / pan
+      const z = zoom<SVGSVGElement, unknown>()
+        .scaleExtent([1, 8])
+        .translateExtent([
+          [0, 0],
+          [W, H],
+        ])
+        .on('zoom', (event) => {
+          root.attr('transform', event.transform);
+          const k = event.transform.k;
+          root.selectAll<SVGCircleElement, unknown>('.dot').attr('r', BASE_R / k);
+          root.selectAll<SVGCircleElement, unknown>('.dot-pulse').attr('r', BASE_R / k);
+          root.selectAll<SVGPathElement, unknown>('.country').attr('stroke-width', 0.5 / k);
+        });
+      svg.call(z as any);
+      svg.on('dblclick.zoom', null);
+    });
+
+  // ── tooltip ──────────────────────────────────────────
+  const tt = document.getElementById('map-tooltip')!;
+  const ttImg = document.getElementById('tt-img') as HTMLImageElement;
+  const ttCity = document.getElementById('tt-city')!;
+  const ttDate = document.getElementById('tt-date')!;
+
+  function showTooltip(d: any) {
+    ttImg.src = d.cover;
+    ttCity.textContent = `${t(d.city)} · ${t(d.countryLabel)}`;
+    ttDate.textContent = t(d.date);
+    tt.hidden = false;
+  }
+  function moveTooltip(event: MouseEvent) {
+    tt.style.left = event.clientX + 'px';
+    tt.style.top = event.clientY + 'px';
+  }
+  function hideTooltip() {
+    tt.hidden = true;
+  }
+
+  // ── modal ────────────────────────────────────────────
+  const modal = document.getElementById('travel-modal')!;
+  const galMain = document.getElementById('gal-main') as HTMLImageElement;
+  const galThumbs = document.getElementById('gal-thumbs')!;
+  const mCity = document.getElementById('m-city')!;
+  const mCountry = document.getElementById('m-country')!;
+  const mDate = document.getElementById('m-date')!;
+  const mBlurb = document.getElementById('m-blurb')!;
+
+  let curPhotos: string[] = [];
+  let curIdx = 0;
+
+  function renderGallery() {
+    if (!curPhotos.length) return;
+    galMain.src = curPhotos[curIdx];
+    galThumbs.querySelectorAll('img').forEach((im, i) => {
+      im.classList.toggle('active', i === curIdx);
+    });
+  }
+
+  function openModal(d: any) {
+    hideTooltip();
+    curPhotos = d.photos && d.photos.length ? d.photos : [d.cover];
+    curIdx = 0;
+    galThumbs.innerHTML = '';
+    curPhotos.forEach((src, i) => {
+      const im = document.createElement('img');
+      im.src = src;
+      im.addEventListener('click', () => {
+        curIdx = i;
+        renderGallery();
+      });
+      galThumbs.appendChild(im);
+    });
+    galThumbs.style.display = curPhotos.length > 1 ? 'flex' : 'none';
+    mCity.textContent = t(d.city);
+    mCountry.textContent = t(d.countryLabel);
+    mDate.textContent = t(d.date);
+    mBlurb.textContent = t(d.blurb);
+    renderGallery();
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('gal-prev')!.addEventListener('click', () => {
+    curIdx = (curIdx - 1 + curPhotos.length) % curPhotos.length;
+    renderGallery();
+  });
+  document.getElementById('gal-next')!.addEventListener('click', () => {
+    curIdx = (curIdx + 1) % curPhotos.length;
+    renderGallery();
+  });
+  modal.querySelectorAll('[data-close]').forEach((el) =>
+    el.addEventListener('click', closeModal)
+  );
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>

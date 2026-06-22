@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
 import {
   site,
   nav,
@@ -20,26 +21,7 @@ const year = new Date().getFullYear();
   title="Ka Sing (Ryan) Leung — AI / LLM Application Developer"
   description="Portfolio of Ka Sing (Ryan) Leung, a Computer Engineering graduate from HKUST specializing in AI and LLM application development."
 >
-  <!-- ===== Nav ===== -->
-  <header class="nav">
-    <div class="wrap nav-inner">
-      <a href="#top" class="brand">
-        <span data-lang-en>{site.name.en}</span>
-        <span data-lang-zh>{site.name.zh}</span>
-      </a>
-      <nav class="nav-links">
-        <a href="#about"><span data-lang-en>{nav.about.en}</span><span data-lang-zh>{nav.about.zh}</span></a>
-        <a href="#experience"><span data-lang-en>{nav.experience.en}</span><span data-lang-zh>{nav.experience.zh}</span></a>
-        <a href="#projects"><span data-lang-en>{nav.projects.en}</span><span data-lang-zh>{nav.projects.zh}</span></a>
-        <a href="#skills"><span data-lang-en>{nav.skills.en}</span><span data-lang-zh>{nav.skills.zh}</span></a>
-        <a href="#contact"><span data-lang-en>{nav.contact.en}</span><span data-lang-zh>{nav.contact.zh}</span></a>
-      </nav>
-      <div class="nav-tools">
-        <button id="lang-toggle" class="btn-ghost" type="button" aria-label="Switch language">中</button>
-        <button id="theme-toggle" class="btn-ghost" type="button" aria-label="Toggle theme">◐</button>
-      </div>
-    </div>
-  </header>
+  <Nav home={true} />
 
   <main id="top">
     <!-- ===== Hero ===== -->

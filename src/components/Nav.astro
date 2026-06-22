@@ -1,0 +1,28 @@
+---
+import { site, nav } from '../data/content';
+import { travelCopy } from '../data/travel';
+// `home` = true when rendered on the homepage (section links are in-page anchors)
+const { home = false } = Astro.props;
+const base = home ? '' : '/';
+---
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand">
+      <span data-lang-en>{site.name.en}</span>
+      <span data-lang-zh>{site.name.zh}</span>
+    </a>
+    <nav class="nav-links">
+      <a href={`${base}#about`}><span data-lang-en>{nav.about.en}</span><span data-lang-zh>{nav.about.zh}</span></a>
+      <a href={`${base}#experience`}><span data-lang-en>{nav.experience.en}</span><span data-lang-zh>{nav.experience.zh}</span></a>
+      <a href={`${base}#projects`}><span data-lang-en>{nav.projects.en}</span><span data-lang-zh>{nav.projects.zh}</span></a>
+      <a href={`${base}#skills`}><span data-lang-en>{nav.skills.en}</span><span data-lang-zh>{nav.skills.zh}</span></a>
+      <a href="/travel"><span data-lang-en>{travelCopy.title.en}</span><span data-lang-zh>{travelCopy.title.zh}</span></a>
+      <a href={`${base}#contact`}><span data-lang-en>{nav.contact.en}</span><span data-lang-zh>{nav.contact.zh}</span></a>
+    </nav>
+    <div class="nav-tools">
+      <button id="lang-toggle" class="btn-ghost" type="button" aria-label="Switch language">中</button>
+      <button id="theme-toggle" class="btn-ghost" type="button" aria-label="Toggle theme">◐</button>
+    </div>
+  </div>
+</header>
