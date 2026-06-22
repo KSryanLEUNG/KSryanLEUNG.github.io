@@ -215,6 +215,12 @@ const countryCount = new Set(places.map((p) => p.countryLabel.en)).size;
     justify-content: center;
     padding: 20px;
   }
+  /* a class selector beats the UA `[hidden] { display: none }` rule, so the
+     hidden state must be re-asserted or the modal stays on top of the map and
+     swallows every hover/click */
+  .modal[hidden] {
+    display: none;
+  }
   .modal-backdrop {
     position: absolute;
     inset: 0;
