@@ -21,12 +21,12 @@ export const nav = {
 
 export const hero = {
   role: {
-    en: 'AI / LLM Application Developer',
-    zh: 'AI／大型語言模型應用開發者',
+    en: 'Agentic AI Developer & Researcher',
+    zh: '代理式 AI 開發者與研究員',
   },
   tagline: {
-    en: 'Computer Engineering graduate from HKUST building agentic AI systems and LLM-powered applications — with hands-on experience in regulated banking environments.',
-    zh: 'HKUST 計算機工程畢業，專注打造代理式 AI 系統與大型語言模型應用，並具備受監管銀行環境的實戰經驗。',
+    en: 'Computer Engineering graduate from HKUST researching and building agentic AI systems and applications — with hands-on experience in regulated banking environments.',
+    zh: 'HKUST 計算機工程畢業，從事代理式 AI 系統與應用的研究與開發，並具備受監管銀行環境的實戰經驗。',
   },
   ctaResume: { en: 'Download Résumé', zh: '下載履歷' },
   ctaContact: { en: 'Get in Touch', zh: '聯絡我' },
@@ -36,12 +36,14 @@ export const about = {
   title: { en: 'About', zh: '關於我' },
   body: {
     en: [
-      'I am a Computer Engineering graduate from HKUST specializing in AI and LLM application development. At Shanghai Commercial Bank I maintain an internal LLM-powered chatbot and independently designed an agentic AI framework that became the team’s reference implementation.',
+      'I am a Computer Engineering graduate from HKUST specializing in agentic AI development and research. At Shanghai Commercial Bank I maintain an internal LLM-powered chatbot and independently designed an agentic AI framework that became the team’s reference implementation.',
       'I enjoy turning research-grade ideas into robust, production-ready software — from agentic architectures and MCP servers to self-hosted AI agents. I value continuous learning, clean engineering, and cross-functional collaboration.',
+      'Away from the keyboard, I am a travel lover — always chasing new cities, food, and views. You can trace my trips on the interactive Travel map.',
     ],
     zh: [
-      '我是香港科技大學（HKUST）計算機工程畢業生，專注於 AI 與大型語言模型（LLM）應用開發。現於上海商業銀行負責維護內部 LLM 聊天機械人，並獨立設計了一套代理式 AI 框架，成為團隊的參考實作。',
+      '我是香港科技大學（HKUST）計算機工程畢業生，專注於代理式 AI 的開發與研究。現於上海商業銀行負責維護內部 LLM 聊天機械人，並獨立設計了一套代理式 AI 框架，成為團隊的參考實作。',
       '我擅長將研究級的構想落地為穩健、可上線的軟件——由代理式架構、MCP 伺服器，到自架 AI 代理。我重視持續學習、乾淨的工程實踐與跨部門協作。',
+      '工作以外，我是個熱愛旅行的人——總在尋找新的城市、美食與風景。你可以在互動「旅遊足跡」地圖上看到我走過的地方。',
     ],
   },
 };
@@ -117,7 +119,7 @@ export const projects = {
       name: { en: 'Folkbot — Self-hosted Family AI Agent', zh: 'Folkbot — 自架家庭 AI 代理' },
       period: { en: 'Apr 2026 – Present', zh: '2026 年 4 月 – 至今' },
       link: 'https://github.com/KSryanLEUNG/folkbot',
-      tags: ['Rust', 'SQLite', 'MCP', 'Telegram', 'LLM'],
+      tags: ['Rust', 'SQLite', 'MCP', 'Agentic', 'Telegram', 'LLM'],
       desc: {
         en: [
           'Designed, built, and open-sourced an always-on, self-hosted family AI agent in Rust: a single shared identity with persistent memory across household members and chat channels, shipped as a single binary backed by SQLite.',
@@ -221,8 +223,8 @@ export const education = {
 export const contact = {
   title: { en: 'Contact', zh: '聯絡' },
   body: {
-    en: 'Open to opportunities in AI / LLM application development. Feel free to reach out.',
-    zh: '歡迎洽談 AI／LLM 應用開發相關機會，隨時與我聯絡。',
+    en: 'Open to opportunities in agentic AI development and research. Feel free to reach out.',
+    zh: '歡迎洽談代理式 AI 開發與研究相關機會，隨時與我聯絡。',
   },
   emailLabel: { en: 'Email', zh: '電郵' },
   githubLabel: { en: 'GitHub', zh: 'GitHub' },
