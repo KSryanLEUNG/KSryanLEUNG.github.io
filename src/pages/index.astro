@@ -1,0 +1,229 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {
+  site,
+  nav,
+  hero,
+  about,
+  experience,
+  projects,
+  skills,
+  education,
+  contact,
+  footer,
+} from '../data/content';
+
+const year = new Date().getFullYear();
+---
+
+<Layout
+  title="Ka Sing (Ryan) Leung — AI / LLM Application Developer"
+  description="Portfolio of Ka Sing (Ryan) Leung, a Computer Engineering graduate from HKUST specializing in AI and LLM application development."
+>
+  <!-- ===== Nav ===== -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand">
+        <span data-lang-en>{site.name.en}</span>
+        <span data-lang-zh>{site.name.zh}</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#about"><span data-lang-en>{nav.about.en}</span><span data-lang-zh>{nav.about.zh}</span></a>
+        <a href="#experience"><span data-lang-en>{nav.experience.en}</span><span data-lang-zh>{nav.experience.zh}</span></a>
+        <a href="#projects"><span data-lang-en>{nav.projects.en}</span><span data-lang-zh>{nav.projects.zh}</span></a>
+        <a href="#skills"><span data-lang-en>{nav.skills.en}</span><span data-lang-zh>{nav.skills.zh}</span></a>
+        <a href="#contact"><span data-lang-en>{nav.contact.en}</span><span data-lang-zh>{nav.contact.zh}</span></a>
+      </nav>
+      <div class="nav-tools">
+        <button id="lang-toggle" class="btn-ghost" type="button" aria-label="Switch language">中</button>
+        <button id="theme-toggle" class="btn-ghost" type="button" aria-label="Toggle theme">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="wrap">
+        <h1>
+          <span data-lang-en>{site.name.en}</span>
+          <span data-lang-zh>{site.name.zh}</span>
+        </h1>
+        <p class="role">
+          <span data-lang-en>{hero.role.en}</span>
+          <span data-lang-zh>{hero.role.zh}</span>
+        </p>
+        <p class="tagline">
+          <span data-lang-en>{hero.tagline.en}</span>
+          <span data-lang-zh>{hero.tagline.zh}</span>
+        </p>
+        <div class="hero-meta">
+          <span>📍 <span data-lang-en>{site.location.en}</span><span data-lang-zh>{site.location.zh}</span></span>
+          <span>✉️ <a href={`mailto:${site.email}`}>{site.email}</a></span>
+          <span>🔗 <a href={site.github} target="_blank" rel="noopener">{site.githubLabel}</a></span>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#contact">
+            <span data-lang-en>{hero.ctaContact.en}</span>
+            <span data-lang-zh>{hero.ctaContact.zh}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about">
+      <div class="wrap reveal">
+        <h2 class="section-title">
+          <span data-lang-en>{about.title.en}</span><span data-lang-zh>{about.title.zh}</span>
+        </h2>
+        <div class="prose">
+          {about.body.en.map((p, i) => (
+            <p data-lang-en set:html={p} />
+          ))}
+          {about.body.zh.map((p, i) => (
+            <p data-lang-zh set:html={p} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Experience ===== -->
+    <section id="experience">
+      <div class="wrap reveal">
+        <h2 class="section-title">
+          <span data-lang-en>{experience.title.en}</span><span data-lang-zh>{experience.title.zh}</span>
+        </h2>
+        {experience.items.map((job) => (
+          <div class="item">
+            <div class="item-head">
+              <p class="item-role">
+                <span data-lang-en>{job.role.en}</span><span data-lang-zh>{job.role.zh}</span>
+              </p>
+              <span class="item-period">
+                <span data-lang-en>{job.period.en}</span><span data-lang-zh>{job.period.zh}</span>
+              </span>
+            </div>
+            <p class="item-org">
+              <span data-lang-en>{job.org.en}</span><span data-lang-zh>{job.org.zh}</span>
+            </p>
+            <ul class="bullets">
+              {job.bullets.en.map((b) => <li data-lang-en>{b}</li>)}
+              {job.bullets.zh.map((b) => <li data-lang-zh>{b}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects">
+      <div class="wrap reveal">
+        <h2 class="section-title">
+          <span data-lang-en>{projects.title.en}</span><span data-lang-zh>{projects.title.zh}</span>
+        </h2>
+        <div class="cards">
+          {projects.items.map((proj) => (
+            <article class="card">
+              <div class="card-head">
+                <h3>
+                  {proj.link ? (
+                    <a href={proj.link} target="_blank" rel="noopener">
+                      <span data-lang-en>{proj.name.en}</span><span data-lang-zh>{proj.name.zh}</span>
+                    </a>
+                  ) : (
+                    <>
+                      <span data-lang-en>{proj.name.en}</span><span data-lang-zh>{proj.name.zh}</span>
+                    </>
+                  )}
+                </h3>
+                <span class="item-period">
+                  <span data-lang-en>{proj.period.en}</span><span data-lang-zh>{proj.period.zh}</span>
+                </span>
+              </div>
+              <div class="prose">
+                {proj.desc.en.map((d) => <p data-lang-en>{d}</p>)}
+                {proj.desc.zh.map((d) => <p data-lang-zh>{d}</p>)}
+              </div>
+              {proj.tags.length > 0 && (
+                <div class="tags">
+                  {proj.tags.map((t) => <span class="tag">{t}</span>)}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <section id="skills">
+      <div class="wrap reveal">
+        <h2 class="section-title">
+          <span data-lang-en>{skills.title.en}</span><span data-lang-zh>{skills.title.zh}</span>
+        </h2>
+        <div class="skill-grid">
+          {skills.groups.map((g) => (
+            <div class="skill-group">
+              <h4>
+                <span data-lang-en>{g.label.en}</span><span data-lang-zh>{g.label.zh}</span>
+              </h4>
+              <div class="chips">
+                {g.items.map((it) => <span class="chip">{it}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Education ===== -->
+    <section id="education">
+      <div class="wrap reveal">
+        <h2 class="section-title">
+          <span data-lang-en>{education.title.en}</span><span data-lang-zh>{education.title.zh}</span>
+        </h2>
+        {education.items.map((e) => (
+          <div class="edu-item">
+            <div>
+              <div class="edu-school">
+                <span data-lang-en>{e.school.en}</span><span data-lang-zh>{e.school.zh}</span>
+              </div>
+              <div class="edu-degree">
+                <span data-lang-en>{e.degree.en}</span><span data-lang-zh>{e.degree.zh}</span>
+              </div>
+            </div>
+            <span class="item-period">{e.period.en}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact">
+      <div class="wrap reveal">
+        <h2 class="section-title">
+          <span data-lang-en>{contact.title.en}</span><span data-lang-zh>{contact.title.zh}</span>
+        </h2>
+        <p class="tagline">
+          <span data-lang-en>{contact.body.en}</span><span data-lang-zh>{contact.body.zh}</span>
+        </p>
+        <div class="contact-row">
+          <a class="btn btn-primary" href={`mailto:${site.email}`}>
+            ✉️ {site.email}
+          </a>
+          <a class="btn btn-outline" href={site.github} target="_blank" rel="noopener">
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      © {year} {site.name.en} ·
+      <span data-lang-en>{footer.rights.en}</span><span data-lang-zh>{footer.rights.zh}</span>
+    </div>
+  </footer>
+</Layout>

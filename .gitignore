@@ -1,0 +1,16 @@
+# build output
+dist/
+# dependencies
+node_modules/
+# generated types
+.astro/
+# environment
+.env
+.env.production
+# macOS
+.DS_Store
+# logs
+npm-debug.log*
+# private job-application materials — never publish
+JOB_Applied_docs/
+Resume_Ryan_Tech.pdf
