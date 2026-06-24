@@ -14,3 +14,5 @@ npm-debug.log*
 # private job-application materials — never publish
 JOB_Applied_docs/
 Resume_Ryan_Tech.pdf
+# internal technical notes — not for publishing
+NOTE.md
