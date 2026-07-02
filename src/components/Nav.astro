@@ -12,7 +12,7 @@ const base = home ? '' : '/';
       <span data-lang-en>{site.name.en}</span>
       <span data-lang-zh>{site.name.zh}</span>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" id="site-menu">
       <a href={`${base}#about`}><span data-lang-en>{nav.about.en}</span><span data-lang-zh>{nav.about.zh}</span></a>
       <a href={`${base}#experience`}><span data-lang-en>{nav.experience.en}</span><span data-lang-zh>{nav.experience.zh}</span></a>
       <a href={`${base}#projects`}><span data-lang-en>{nav.projects.en}</span><span data-lang-zh>{nav.projects.zh}</span></a>
@@ -23,6 +23,14 @@ const base = home ? '' : '/';
     <div class="nav-tools">
       <button id="lang-toggle" class="btn-ghost" type="button" aria-label="Switch language">中</button>
       <button id="theme-toggle" class="btn-ghost" type="button" aria-label="Toggle theme">◐</button>
+      <button
+        id="nav-toggle"
+        class="btn-ghost nav-burger"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="site-menu"
+      >☰</button>
     </div>
   </div>
 </header>

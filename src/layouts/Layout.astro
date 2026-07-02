@@ -64,6 +64,24 @@ const { title, description } = Astro.props;
           });
         }
 
+        // Mobile menu toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navHeader = document.querySelector('.nav');
+        if (navToggle && navHeader) {
+          const setMenu = (open) => {
+            navHeader.classList.toggle('menu-open', open);
+            navToggle.setAttribute('aria-expanded', String(open));
+            navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            navToggle.textContent = open ? '✕' : '☰';
+          };
+          navToggle.addEventListener('click', () => {
+            setMenu(!navHeader.classList.contains('menu-open'));
+          });
+          navHeader.querySelectorAll('.nav-links a').forEach((a) => {
+            a.addEventListener('click', () => setMenu(false));
+          });
+        }
+
         // Language toggle
         const langBtn = document.getElementById('lang-toggle');
         const syncLangLabel = () => {
