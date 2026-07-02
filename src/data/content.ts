@@ -4,10 +4,8 @@ export type Lang = 'en' | 'zh';
 export const site = {
   name: { en: 'Ka Sing (Ryan) Leung', zh: '梁家聲 (Ryan)' },
   email: 'ryanrain817@gmail.com',
-  phone: '+852 5222 4807',
   github: 'https://github.com/KSryanLEUNG',
   githubLabel: 'github.com/KSryanLEUNG',
-  resume: 'Resume_Ryan_Tech.pdf',
   location: { en: 'Hong Kong', zh: '香港' },
 };
 
@@ -28,7 +26,6 @@ export const hero = {
     en: 'Computer Engineering graduate from HKUST researching and building agentic AI systems and applications — with hands-on experience in regulated banking environments.',
     zh: 'HKUST 計算機工程畢業，從事代理式 AI 系統與應用的研究與開發，並具備受監管銀行環境的實戰經驗。',
   },
-  ctaResume: { en: 'Download Résumé', zh: '下載履歷' },
   ctaContact: { en: 'Get in Touch', zh: '聯絡我' },
 };
 
