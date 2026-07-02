@@ -413,6 +413,10 @@ footer {
 [data-lang-zh] {
   display: none;
 }
+/* No-JS fallback: before the inline script sets data-lang, show English */
+:root:not([data-lang]) [data-lang-en] {
+  display: revert;
+}
 :root[data-lang="en"] [data-lang-en] {
   display: revert;
 }
