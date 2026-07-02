@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<Layout
+  title="404 — Page Not Found"
+  description="The page you are looking for does not exist."
+>
+  <Nav />
+
+  <main>
+    <section class="notfound">
+      <div class="wrap">
+        <p class="code">404</p>
+        <h1>
+          <span data-lang-en>Page not found</span>
+          <span data-lang-zh>找不到頁面</span>
+        </h1>
+        <p class="tagline">
+          <span data-lang-en>The page you are looking for doesn’t exist or has moved.</span>
+          <span data-lang-zh>你要找的頁面不存在，或已被移動。</span>
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/">
+            <span data-lang-en>← Back to home</span>
+            <span data-lang-zh>← 返回首頁</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .notfound {
+    padding: 120px 0;
+    border-bottom: none;
+    text-align: center;
+  }
+  .code {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin: 0 0 8px;
+    letter-spacing: -0.03em;
+  }
+  h1 {
+    margin: 0 0 12px;
+    font-size: 1.6rem;
+  }
+  .tagline {
+    color: var(--text-soft);
+    margin: 0 0 28px;
+  }
+  .cta-row {
+    justify-content: center;
+  }
+</style>
