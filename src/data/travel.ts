@@ -10,7 +10,6 @@
 //  • home     : optional; set true for your home city (shown with a gold marker).
 //
 // Order here = display order. Home is pinned first; the rest run newest → oldest.
-// Beijing / Shanghai / Kyoto have no trip date yet, so they sit at the end.
 //
 // To add real photos: drop image files into public/travel/<id>/ and update the
 // `cover` and `photos` paths below. The .svg files there now are placeholders.
