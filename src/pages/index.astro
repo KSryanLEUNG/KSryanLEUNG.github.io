@@ -15,6 +15,23 @@ import {
 } from '../data/content';
 
 const year = new Date().getFullYear();
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Ka Sing Leung',
+  alternateName: ['Ryan Leung', '梁家聲'],
+  email: `mailto:${site.email}`,
+  jobTitle: 'Agentic AI Developer & Researcher',
+  worksFor: { '@type': 'Organization', name: 'Shanghai Commercial Bank' },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'The Hong Kong University of Science and Technology',
+  },
+  address: { '@type': 'PostalAddress', addressLocality: 'Hong Kong' },
+  url: 'https://ksryanleung.github.io',
+  sameAs: [site.github],
+};
 ---
 
 <Layout
@@ -22,6 +39,8 @@ const year = new Date().getFullYear();
   description="Portfolio of Ka Sing (Ryan) Leung, a Computer Engineering graduate from HKUST specializing in AI and LLM application development."
 >
   <Nav home={true} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
 
   <main id="top">
     <!-- ===== Hero ===== -->
