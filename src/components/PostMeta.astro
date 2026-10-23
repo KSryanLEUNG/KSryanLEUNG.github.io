@@ -1,0 +1,26 @@
+---
+import { blogCopy, formatDate, readingMinutes, type Post } from '../lib/blog';
+
+interface Props {
+  post: Post;
+  showTags?: boolean;
+}
+const { post, showTags = true } = Astro.props;
+const date = formatDate(post.data.pubDate);
+const minutes = readingMinutes(post.body);
+const langName = blogCopy.langName[post.data.lang];
+---
+
+<div class="post-meta">
+  <time datetime={post.data.pubDate.toISOString().slice(0, 10)}>
+    <span data-lang-en>{date.en}</span><span data-lang-zh>{date.zh}</span>
+  </time>
+  <span>
+    <span data-lang-en>{minutes} {blogCopy.minRead.en}</span><span data-lang-zh>{minutes} {blogCopy.minRead.zh}</span>
+  </span>
+  <span class="lang-badge">
+    <span data-lang-en>{langName.en}</span><span data-lang-zh>{langName.zh}</span>
+  </span>
+  {post.data.draft && <span class="lang-badge">DRAFT</span>}
+  {showTags && post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+</div>

@@ -10,11 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.2.1",
     "astro": "^4.16.0",
     "d3-geo": "^3.1.1",
     "d3-selection": "^3.0.0",
-    "d3-zoom": "^3.0.0",
     "topojson-client": "^3.1.0"
   }
 }

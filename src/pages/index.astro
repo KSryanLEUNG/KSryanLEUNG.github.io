@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PostMeta from '../components/PostMeta.astro';
+import { getPosts, blogCopy } from '../lib/blog';
 import {
   site,
   nav,
@@ -11,10 +14,9 @@ import {
   skills,
   education,
   contact,
-  footer,
 } from '../data/content';
 
-const year = new Date().getFullYear();
+const latestPosts = (await getPosts()).slice(0, 3);
 
 const personLd = {
   '@context': 'https://schema.org',
@@ -157,6 +159,29 @@ const personLd = {
       </div>
     </section>
 
+    <!-- ===== Latest writing (shown once there are posts) ===== -->
+    {latestPosts.length > 0 && (
+      <section id="writing">
+        <div class="wrap reveal">
+          <h2 class="section-title">
+            <span data-lang-en>{blogCopy.latest.en}</span><span data-lang-zh>{blogCopy.latest.zh}</span>
+          </h2>
+          <ul class="post-list">
+            {latestPosts.map((post) => (
+              <li class="post-item">
+                <h3 lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>
+                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                </h3>
+                <p lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>{post.data.description}</p>
+                <PostMeta post={post} showTags={false} />
+              </li>
+            ))}
+          </ul>
+          <p><a href="/blog/"><span data-lang-en>{blogCopy.all.en}</span><span data-lang-zh>{blogCopy.all.zh}</span></a></p>
+        </div>
+      </section>
+    )}
+
     <!-- ===== Skills ===== -->
     <section id="skills">
       <div class="wrap reveal">
@@ -221,10 +246,5 @@ const personLd = {
     </section>
   </main>
 
-  <footer>
-    <div class="wrap">
-      © {year} {site.name.en} ·
-      <span data-lang-en>{footer.rights.en}</span><span data-lang-zh>{footer.rights.zh}</span>
-    </div>
-  </footer>
+  <Footer />
 </Layout>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import { places, travelCopy } from '../data/travel';
 
 // count by `country` (map name) so Hong Kong counts under China, not as its own
@@ -68,12 +69,12 @@ const cityCount = places.length;
             </h3>
             <ul class="region-items">
               {places.map((p) => (
-                <li
-                  class={p.home ? 'region-item home' : 'region-item'}
-                  data-id={p.id}
-                  role="button"
-                  tabindex="0"
-                >
+                <li>
+                  <button
+                    type="button"
+                    class={p.home ? 'region-item home' : 'region-item'}
+                    data-id={p.id}
+                  >
                   <span class="region-swatch"></span>
                   <span class="region-item-main">
                     <span class="region-item-name">
@@ -85,6 +86,7 @@ const cityCount = places.length;
                       </span>
                     )}
                   </span>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -128,6 +130,8 @@ const cityCount = places.length;
       </div>
     </section>
   </main>
+
+  <Footer />
 
   <!-- hover preview -->
   <div id="map-tooltip" class="map-tooltip" hidden>
@@ -285,8 +289,13 @@ const cityCount = places.length;
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
     padding: 7px 10px;
+    border: none;
     border-radius: 9px;
+    background: none;
+    font: inherit;
+    text-align: left;
     cursor: pointer;
     color: var(--text-soft);
     transition: background 0.15s ease, color 0.15s ease;
@@ -539,7 +548,10 @@ const cityCount = places.length;
 
   // ── build map from topojson ─────────────────────────────
   fetch('/data/countries-110m.json')
-    .then((r) => r.json())
+    .then((r) => {
+      if (!r.ok) throw new Error(`map data ${r.status}`);
+      return r.json();
+    })
     .then((topo: any) => {
       const land = feature(topo, topo.objects.countries) as any;
       landSel = landG
@@ -578,6 +590,10 @@ const cityCount = places.length;
 
       resize();
       scheduleSpin();
+    })
+    .catch(() => {
+      // Draw the empty sphere; the destination list and stories still work.
+      resize();
     });
 
   new ResizeObserver(() => resize()).observe(container);
@@ -682,8 +698,10 @@ const cityCount = places.length;
   window.addEventListener('pointerup', releasePointer);
   window.addEventListener('pointercancel', releasePointer);
 
-  // wheel to zoom (and reset on double-click)
+  // Ctrl/⌘ + wheel zooms (trackpad pinch also sends ctrlKey); a plain wheel
+  // keeps scrolling the page so the large sticky globe never traps the reader.
   svg.on('wheel', (event: any) => {
+    if (!event.ctrlKey && !event.metaKey) return;
     event.preventDefault();
     stopSpin();
     setZoom(zoomK * Math.exp(-event.deltaY * 0.0015));
@@ -744,12 +762,6 @@ const cityCount = places.length;
     });
     el.addEventListener('mouseleave', () => {
       if (dotG) dotG.classed('hover', false);
-    });
-    el.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        selectPlace(id, true);
-      }
     });
   });
 

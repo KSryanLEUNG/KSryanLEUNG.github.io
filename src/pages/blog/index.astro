@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PostMeta from '../../components/PostMeta.astro';
+import { getPosts, blogCopy } from '../../lib/blog';
+
+const posts = await getPosts();
+---
+
+<Layout
+  title="Blog — Ka Sing (Ryan) Leung"
+  description="Writing by Ka Sing (Ryan) Leung on agentic AI, LLM applications, and AI engineering."
+>
+  <Nav />
+
+  <main>
+    <section class="page-head">
+      <div class="wrap">
+        <p class="section-title">AI · LLM · AGENTS</p>
+        <h1><span data-lang-en>{blogCopy.title.en}</span><span data-lang-zh>{blogCopy.title.zh}</span></h1>
+        <p class="tagline">
+          <span data-lang-en>{blogCopy.subtitle.en}</span><span data-lang-zh>{blogCopy.subtitle.zh}</span>
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        {posts.length === 0 ? (
+          <p class="empty-note">
+            <span data-lang-en>{blogCopy.empty.en}</span><span data-lang-zh>{blogCopy.empty.zh}</span>
+          </p>
+        ) : (
+          <ul class="post-list">
+            {posts.map((post) => (
+              <li class="post-item">
+                <h2 lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>
+                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                </h2>
+                <p lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>{post.data.description}</p>
+                <PostMeta post={post} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

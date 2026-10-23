@@ -14,6 +14,7 @@ export const nav = {
   experience: { en: 'Experience', zh: '經歷' },
   projects: { en: 'Projects', zh: '專案' },
   skills: { en: 'Skills', zh: '技能' },
+  blog: { en: 'Blog', zh: '網誌' },
   contact: { en: 'Contact', zh: '聯絡' },
 };
 
@@ -228,5 +229,5 @@ export const contact = {
 };
 
 export const footer = {
-  rights: { en: 'All rights reserved.', zh: '版權所有。' },
+  rights: { en: 'All rights reserved', zh: '版權所有' },
 };

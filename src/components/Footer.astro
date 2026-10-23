@@ -1,0 +1,14 @@
+---
+import { site, footer } from '../data/content';
+import { blogCopy } from '../lib/blog';
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="wrap">
+    © {year} {site.name.en} ·
+    <span data-lang-en>{footer.rights.en}</span><span data-lang-zh>{footer.rights.zh}</span>
+    · <a href="/rss.xml"><span data-lang-en>{blogCopy.rss.en}</span><span data-lang-zh>{blogCopy.rss.zh}</span></a>
+  </div>
+</footer>

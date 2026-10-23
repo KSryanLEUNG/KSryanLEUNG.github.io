@@ -8,4 +8,11 @@ export default defineConfig({
   site: 'https://ksryanleung.github.io',
   // base: '/personal_web',
   integrations: [sitemap()],
+  markdown: {
+    // Both themes are emitted; global.css switches to `dark` with the site theme.
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      wrap: false,
+    },
+  },
 });

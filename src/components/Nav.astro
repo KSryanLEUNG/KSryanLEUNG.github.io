@@ -4,6 +4,8 @@ import { travelCopy } from '../data/travel';
 // `home` = true when rendered on the homepage (section links are in-page anchors)
 const { home = false } = Astro.props;
 const base = home ? '' : '/';
+const path = Astro.url.pathname;
+const current = (prefix: string) => (path.startsWith(prefix) ? 'page' : undefined);
 ---
 
 <header class="nav">
@@ -17,12 +19,18 @@ const base = home ? '' : '/';
       <a href={`${base}#experience`}><span data-lang-en>{nav.experience.en}</span><span data-lang-zh>{nav.experience.zh}</span></a>
       <a href={`${base}#projects`}><span data-lang-en>{nav.projects.en}</span><span data-lang-zh>{nav.projects.zh}</span></a>
       <a href={`${base}#skills`}><span data-lang-en>{nav.skills.en}</span><span data-lang-zh>{nav.skills.zh}</span></a>
-      <a href="/travel"><span data-lang-en>{travelCopy.title.en}</span><span data-lang-zh>{travelCopy.title.zh}</span></a>
+      <a href="/blog/" aria-current={current('/blog')}><span data-lang-en>{nav.blog.en}</span><span data-lang-zh>{nav.blog.zh}</span></a>
+      <a href="/travel/" aria-current={current('/travel')}><span data-lang-en>{travelCopy.title.en}</span><span data-lang-zh>{travelCopy.title.zh}</span></a>
       <a href={`${base}#contact`}><span data-lang-en>{nav.contact.en}</span><span data-lang-zh>{nav.contact.zh}</span></a>
     </nav>
     <div class="nav-tools">
       <button id="lang-toggle" class="btn-ghost" type="button" aria-label="Switch language">中</button>
-      <button id="theme-toggle" class="btn-ghost" type="button" aria-label="Toggle theme">◐</button>
+      <button id="theme-toggle" class="btn-ghost btn-icon" type="button" aria-label="Dark theme">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" />
+        </svg>
+      </button>
       <button
         id="nav-toggle"
         class="btn-ghost nav-burger"
