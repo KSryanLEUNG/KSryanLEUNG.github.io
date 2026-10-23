@@ -7,7 +7,7 @@ interface Props {
 }
 const { post, showTags = true } = Astro.props;
 const date = formatDate(post.data.pubDate);
-const minutes = readingMinutes(post.body);
+const minutes = readingMinutes(post.body ?? '');
 const langName = blogCopy.langName[post.data.lang];
 ---
 

@@ -6,6 +6,8 @@ light/dark + language toggle.
 
 ## Develop
 
+Requires Node.js 22.22 or newer (Astro 7).
+
 ```bash
 npm install
 npm run dev      # http://localhost:4321

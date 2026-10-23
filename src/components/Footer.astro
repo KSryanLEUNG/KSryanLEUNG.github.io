@@ -7,8 +7,9 @@ const year = new Date().getFullYear();
 
 <footer>
   <div class="wrap">
-    © {year} {site.name.en} ·
+    {/* Explicit spaces: Astro collapses whitespace next to elements. */}
+    {`© ${year} ${site.name.en} · `}
     <span data-lang-en>{footer.rights.en}</span><span data-lang-zh>{footer.rights.zh}</span>
-    · <a href="/rss.xml"><span data-lang-en>{blogCopy.rss.en}</span><span data-lang-zh>{blogCopy.rss.zh}</span></a>
+    {' · '}<a href="/rss.xml"><span data-lang-en>{blogCopy.rss.en}</span><span data-lang-zh>{blogCopy.rss.zh}</span></a>
   </div>
 </footer>

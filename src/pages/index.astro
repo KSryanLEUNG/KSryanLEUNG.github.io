@@ -170,7 +170,7 @@ const personLd = {
             {latestPosts.map((post) => (
               <li class="post-item">
                 <h3 lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>
-                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
                 </h3>
                 <p lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>{post.data.description}</p>
                 <PostMeta post={post} showTags={false} />
