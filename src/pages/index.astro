@@ -6,10 +6,10 @@ import PostMeta from '../components/PostMeta.astro';
 import { getPosts, blogCopy } from '../lib/blog';
 import {
   site,
-  nav,
+  seo,
   hero,
   about,
-  experience,
+  approach,
   projects,
   skills,
   education,
@@ -24,8 +24,7 @@ const personLd = {
   name: 'Ka Sing Leung',
   alternateName: ['Ryan Leung', '梁家聲'],
   email: `mailto:${site.email}`,
-  jobTitle: 'Agentic AI Developer & Researcher',
-  worksFor: { '@type': 'Organization', name: 'Shanghai Commercial Bank' },
+  description: seo.description,
   alumniOf: {
     '@type': 'CollegeOrUniversity',
     name: 'The Hong Kong University of Science and Technology',
@@ -37,8 +36,8 @@ const personLd = {
 ---
 
 <Layout
-  title="Ka Sing (Ryan) Leung — AI / LLM Application Developer"
-  description="Portfolio of Ka Sing (Ryan) Leung, a Computer Engineering graduate from HKUST specializing in AI and LLM application development."
+  title={seo.title}
+  description={seo.description}
 >
   <Nav home={true} />
 
@@ -66,7 +65,11 @@ const personLd = {
           <span>🔗 <a href={site.github} target="_blank" rel="noopener">{site.githubLabel}</a></span>
         </div>
         <div class="cta-row">
-          <a class="btn btn-primary" href="#contact">
+          <a class="btn btn-primary" href="#projects">
+            <span data-lang-en>{hero.ctaProjects.en}</span>
+            <span data-lang-zh>{hero.ctaProjects.zh}</span>
+          </a>
+          <a class="btn btn-outline" href="#contact">
             <span data-lang-en>{hero.ctaContact.en}</span>
             <span data-lang-zh>{hero.ctaContact.zh}</span>
           </a>
@@ -81,41 +84,13 @@ const personLd = {
           <span data-lang-en>{about.title.en}</span><span data-lang-zh>{about.title.zh}</span>
         </h2>
         <div class="prose">
-          {about.body.en.map((p, i) => (
-            <p data-lang-en set:html={p} />
+          {about.body.en.map((p) => (
+            <p data-lang-en>{p}</p>
           ))}
-          {about.body.zh.map((p, i) => (
-            <p data-lang-zh set:html={p} />
+          {about.body.zh.map((p) => (
+            <p data-lang-zh>{p}</p>
           ))}
         </div>
-      </div>
-    </section>
-
-    <!-- ===== Experience ===== -->
-    <section id="experience">
-      <div class="wrap reveal">
-        <h2 class="section-title">
-          <span data-lang-en>{experience.title.en}</span><span data-lang-zh>{experience.title.zh}</span>
-        </h2>
-        {experience.items.map((job) => (
-          <div class="item">
-            <div class="item-head">
-              <p class="item-role">
-                <span data-lang-en>{job.role.en}</span><span data-lang-zh>{job.role.zh}</span>
-              </p>
-              <span class="item-period">
-                <span data-lang-en>{job.period.en}</span><span data-lang-zh>{job.period.zh}</span>
-              </span>
-            </div>
-            <p class="item-org">
-              <span data-lang-en>{job.org.en}</span><span data-lang-zh>{job.org.zh}</span>
-            </p>
-            <ul class="bullets">
-              {job.bullets.en.map((b) => <li data-lang-en>{b}</li>)}
-              {job.bullets.zh.map((b) => <li data-lang-zh>{b}</li>)}
-            </ul>
-          </div>
-        ))}
       </div>
     </section>
 
@@ -127,35 +102,44 @@ const personLd = {
         </h2>
         <div class="cards">
           {projects.items.map((proj) => (
-            <article class="card">
+            <article class="card" id={proj.id}>
               <div class="card-head">
                 <h3>
-                  {proj.link ? (
-                    <a href={proj.link} target="_blank" rel="noopener">
-                      <span data-lang-en>{proj.name.en}</span><span data-lang-zh>{proj.name.zh}</span>
-                    </a>
-                  ) : (
-                    <>
-                      <span data-lang-en>{proj.name.en}</span><span data-lang-zh>{proj.name.zh}</span>
-                    </>
-                  )}
+                  <span data-lang-en>{proj.name.en}</span><span data-lang-zh>{proj.name.zh}</span>
                 </h3>
-                <span class="item-period">
-                  <span data-lang-en>{proj.period.en}</span><span data-lang-zh>{proj.period.zh}</span>
+                <span class="case-status">
+                  <span data-lang-en>{proj.status.en}</span><span data-lang-zh>{proj.status.zh}</span>
                 </span>
               </div>
-              <div class="prose">
-                {proj.desc.en.map((d) => <p data-lang-en>{d}</p>)}
-                {proj.desc.zh.map((d) => <p data-lang-zh>{d}</p>)}
-              </div>
-              {proj.tags.length > 0 && (
-                <div class="tags">
-                  {proj.tags.map((t) => <span class="tag">{t}</span>)}
-                </div>
-              )}
+              <dl class="case-details">
+                {(['problem', 'method', 'contribution', 'result'] as const).map((key) => (
+                  <div>
+                    <dt><span data-lang-en>{projects.labels[key].en}</span><span data-lang-zh>{projects.labels[key].zh}</span></dt>
+                    <dd><span data-lang-en>{proj[key].en}</span><span data-lang-zh>{proj[key].zh}</span></dd>
+                  </div>
+                ))}
+              </dl>
             </article>
           ))}
         </div>
+      </div>
+    </section>
+
+    <!-- ===== Engineering approach ===== -->
+    <section id="approach">
+      <div class="wrap reveal">
+        <span id="experience" aria-hidden="true"></span>
+        <h2 class="section-title">
+          <span data-lang-en>{approach.title.en}</span><span data-lang-zh>{approach.title.zh}</span>
+        </h2>
+        {approach.items.map((item) => (
+          <div class="item">
+            <h3 class="item-role"><span data-lang-en>{item.title.en}</span><span data-lang-zh>{item.title.zh}</span></h3>
+            <div class="prose">
+              <p><span data-lang-en>{item.body.en}</span><span data-lang-zh>{item.body.zh}</span></p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
 
@@ -194,6 +178,9 @@ const personLd = {
               <h4>
                 <span data-lang-en>{g.label.en}</span><span data-lang-zh>{g.label.zh}</span>
               </h4>
+              <div class="prose">
+                <p><span data-lang-en>{g.body.en}</span><span data-lang-zh>{g.body.zh}</span></p>
+              </div>
               <div class="chips">
                 {g.items.map((it) => <span class="chip">{it}</span>)}
               </div>
