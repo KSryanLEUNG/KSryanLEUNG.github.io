@@ -116,14 +116,13 @@ const cityCount = places.length;
                   <span data-lang-en>{p.date.en}</span><span data-lang-zh>{p.date.zh}</span>
                 </p>
               )}
-              <div class="prose">
-                <p>
-                  <span data-lang-en>{p.blurb.en}</span><span data-lang-zh>{p.blurb.zh}</span>
-                </p>
-                <p class="region-placeholder">
-                  <span data-lang-en>{travelCopy.placeholder.en}</span><span data-lang-zh>{travelCopy.placeholder.zh}</span>
-                </p>
-              </div>
+              {p.blurb && (
+                <div class="prose">
+                  <p>
+                    <span data-lang-en>{p.blurb.en}</span><span data-lang-zh>{p.blurb.zh}</span>
+                  </p>
+                </div>
+              )}
             </div>
           </article>
         ))}
@@ -395,10 +394,6 @@ const cityCount = places.length;
   }
   .region-date {
     margin: 0 0 12px;
-  }
-  .region-placeholder {
-    color: var(--text-faint);
-    font-size: 0.95rem;
   }
 
   /* ── hover tooltip ────────────────────────────────────── */
