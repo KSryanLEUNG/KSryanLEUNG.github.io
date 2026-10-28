@@ -16,8 +16,8 @@ const current = (prefix: string) => (path.startsWith(prefix) ? 'page' : undefine
     </a>
     <nav class="nav-links" id="site-menu">
       <a href={`${base}#about`}><span data-lang-en>{nav.about.en}</span><span data-lang-zh>{nav.about.zh}</span></a>
+      <a href={`${base}#experience`}><span data-lang-en>{nav.experience.en}</span><span data-lang-zh>{nav.experience.zh}</span></a>
       <a href={`${base}#projects`}><span data-lang-en>{nav.projects.en}</span><span data-lang-zh>{nav.projects.zh}</span></a>
-      <a href={`${base}#approach`}><span data-lang-en>{nav.approach.en}</span><span data-lang-zh>{nav.approach.zh}</span></a>
       <a href={`${base}#skills`}><span data-lang-en>{nav.skills.en}</span><span data-lang-zh>{nav.skills.zh}</span></a>
       <a href="/blog/" aria-current={current('/blog')}><span data-lang-en>{nav.blog.en}</span><span data-lang-zh>{nav.blog.zh}</span></a>
       <a href="/travel/" aria-current={current('/travel')}><span data-lang-en>{travelCopy.title.en}</span><span data-lang-zh>{travelCopy.title.zh}</span></a>

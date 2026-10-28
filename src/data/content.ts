@@ -9,27 +9,24 @@ export const site = {
   location: { en: 'Hong Kong', zh: '香港' },
 };
 
-export const seo = {
-  title: 'Ka Sing (Ryan) Leung — AI Systems & Engineering',
-  description: 'Engineering cases from Ka Sing (Ryan) Leung: traceable AI answers, evidence validation, access boundaries and bilingual web delivery.',
-};
-
 export const nav = {
   about: { en: 'About', zh: '關於' },
+  experience: { en: 'Experience', zh: '經歷' },
   projects: { en: 'Projects', zh: '專案' },
-  approach: { en: 'Approach', zh: '工程方法' },
-  skills: { en: 'Tools', zh: '技術工具' },
+  skills: { en: 'Skills', zh: '技能' },
   blog: { en: 'Blog', zh: '網誌' },
   contact: { en: 'Contact', zh: '聯絡' },
 };
 
 export const hero = {
-  role: { en: 'AI systems, grounded in evidence', zh: '以證據為基礎的 AI 系統' },
-  tagline: {
-    en: 'I work on traceable AI answers and agent workflows, with a focus on verifiable results, explicit access boundaries and safe recovery when a task goes wrong.',
-    zh: '我關注可追溯的 AI 答案與 agent 工作流程，重視可驗證的結果、清晰的存取邊界，以及任務出錯後的安全恢復。',
+  role: {
+    en: 'Agentic AI Developer & Researcher',
+    zh: '代理式 AI 開發者與研究員',
   },
-  ctaProjects: { en: 'Explore the work', zh: '查看工程案例' },
+  tagline: {
+    en: 'Computer Engineering graduate from HKUST researching and building agentic AI systems and applications — with hands-on experience in regulated banking environments.',
+    zh: 'HKUST 計算機工程畢業，從事代理式 AI 系統與應用的研究與開發，並具備受監管銀行環境的實戰經驗。',
+  },
   ctaContact: { en: 'Get in Touch', zh: '聯絡我' },
 };
 
@@ -37,111 +34,167 @@ export const about = {
   title: { en: 'About', zh: '關於我' },
   body: {
     en: [
-      'I am Ka Sing (Ryan) Leung, a Computer Engineering graduate from HKUST based in Hong Kong. My focus is the engineering around AI: how an answer connects to evidence, what a tool is allowed to do, and how a workflow recovers from an uncertain outcome.',
-      'I turn requirements into explicit acceptance criteria and reviewable changes, working with teammates and AI coding agents on implementation and validation. The cases below describe my contribution, shared implementation and the limits of current validation.',
-      'Away from the keyboard, I enjoy exploring cities, food and landscapes. My Travel map collects some of those journeys.',
+      'I am a Computer Engineering graduate from HKUST specializing in agentic AI development and research. In my current banking role I maintain an internal LLM-powered chatbot and independently designed an agentic AI framework that became the team’s reference implementation.',
+      'I enjoy turning research-grade ideas into robust, production-ready software — from agentic architectures and MCP servers to self-hosted AI agents. I value continuous learning, clean engineering, and cross-functional collaboration.',
+      'Away from the keyboard, I am a travel lover — always chasing new cities, food, and views. You can trace my trips on the interactive Travel map.',
     ],
     zh: [
-      '我是梁家聲（Ryan），現居香港，畢業於香港科技大學計算機工程系。我關注 AI 系統的工程問題：答案如何連結證據、工具獲准執行甚麼，以及流程面對不確定結果時如何恢復。',
-      '我把需求轉化為明確的驗收條件與可審閱的修改，並與團隊及 AI coding agents 協作實作和驗證。以下案例會說明我的貢獻、共同實作的範圍，以及目前驗證的邊界。',
-      '工作以外，我喜歡探索不同城市、美食與風景。你可以在「旅遊足跡」地圖上看到部分旅程。',
+      '我是香港科技大學（HKUST）計算機工程畢業生，專注於代理式 AI 的開發與研究。現職於銀行，負責維護內部 LLM 聊天機械人，並獨立設計了一套代理式 AI 框架，成為團隊的參考實作。',
+      '我擅長將研究級的構想落地為穩健、可上線的軟件——由代理式架構、MCP 伺服器，到自架 AI 代理。我重視持續學習、乾淨的工程實踐與跨部門協作。',
+      '工作以外，我是個熱愛旅行的人——總在尋找新的城市、美食與風景。你可以在互動「旅遊足跡」地圖上看到我走過的地方。',
     ],
   },
 };
 
-export const projects = {
-  title: { en: 'Selected engineering cases', zh: '精選工程案例' },
-  labels: {
-    problem: { en: 'Problem', zh: '問題' },
-    method: { en: 'Technical approach', zh: '技術方法' },
-    contribution: { en: 'My contribution', zh: '我的貢獻' },
-    result: { en: 'Verified result & current limits', zh: '已驗證結果與目前邊界' },
-  },
+export const experience = {
+  title: { en: 'Experience', zh: '工作經歷' },
   items: [
     {
-      id: 'traceable-ai-answers',
-      name: { en: 'Traceable AI answers', zh: '可追溯的 AI 答案' },
-      status: { en: 'Implementation under review', zh: '實作評審中' },
-      problem: {
-        en: 'A plausible answer can still cite the wrong evidence, misstate a calculation or expose a source after access has changed. Reliability depends on checking the claim, its evidence and the reader’s current permissions together.',
-        zh: '看似合理的答案，仍可能引用錯誤證據、算錯數值，或在權限改變後繼續開啟來源。可靠性需要同時檢查主張、證據與讀者當下的存取權。',
+      role: { en: 'Officer, Application Development', zh: '應用開發主任' },
+      org: {
+        en: 'Shanghai Commercial Bank (joined as Infinite Financial Solutions Ltd, merged into SCB in Jan 2026)',
+        zh: '上海商業銀行（以 Infinite Financial Solutions Ltd 加入，2026 年 1 月併入 SCB）',
       },
-      method: {
-        en: 'Bind claims to source evidence, validate calculations and use conservative citations for totals assembled from multiple sources. Keep answer decisions separate from citation repair, and recheck access when reopening historical sources.',
-        zh: '把主張與來源證據綁定，驗證計算，並對跨來源加總採取保守的引用策略。答案決策與引用修復分開處理，重開歷史來源時重新檢查存取權。',
-      },
-      contribution: {
-        en: 'I defined citation behaviour and acceptance boundaries, and requested independent reviews. Implementation, fixes and regression work were shared with teammates and AI coding agents.',
-        zh: '我定義引用行為與驗收邊界，並要求獨立複查。實作、修正與回歸驗證由團隊及 AI coding agents 協作完成。',
-      },
-      result: {
-        en: 'Recorded local regression and isolated integration runs cover citation, calculation and access scenarios. The implementation remains under review; production configuration and acceptance with real data, live models and messaging channels are still pending.',
-        zh: '已有本機回歸及隔離整合測試記錄，涵蓋引用、計算與存取情境。實作仍在評審中；正式設定、真實資料與模型，以及實際通訊渠道的驗收仍待完成。',
+      period: { en: 'Jul 2025 – Present', zh: '2025 年 7 月 – 至今' },
+      bullets: {
+        en: [
+          'Maintain and enhance the bank’s internal LLM-powered chatbot serving the PPCD department’s daily operations.',
+          'Independently designed and built an agentic AI framework implementing the ReAct architecture with LangChain and LangGraph, powering the team’s AI research and prototyping.',
+          'Framework adopted as the team’s reference implementation and the onboarding project for new members.',
+          'Developed MCP (Model Context Protocol) servers adopted across the team; integrated foundation models via AWS Bedrock.',
+          'Evaluated NVIDIA NemoClaw for secure, policy-governed agent deployment in a regulated banking environment.',
+        ],
+        zh: [
+          '維護並優化銀行內部 LLM 聊天機械人，支援 PPCD 部門的日常運作。',
+          '獨立設計並建構一套採用 ReAct 架構的代理式 AI 框架（LangChain、LangGraph），驅動團隊的 AI 研究與原型開發。',
+          '該框架獲團隊採用為參考實作，並成為新成員的入職項目。',
+          '開發 MCP（Model Context Protocol）伺服器並於團隊內推廣；透過 AWS Bedrock 整合基礎模型。',
+          '評估 NVIDIA NemoClaw，用於受監管銀行環境下安全、合規的代理部署。',
+        ],
       },
     },
     {
-      id: 'bilingual-web-delivery',
-      name: { en: 'Bilingual web delivery', zh: '雙語網站的內容交付' },
-      status: { en: 'Supporting work · deployed foundation', zh: '次要案例 · 基礎功能已部署' },
-      problem: {
-        en: 'A personal site needs a repeatable way to publish writing while keeping navigation, language switching and small-screen reading consistent.',
-        zh: '個人網站需要可重複的文章發佈流程，同時兼顧導覽、語言切換與小螢幕閱讀。',
+      role: { en: 'Full Stack Software Developer', zh: '全端軟件開發者' },
+      org: { en: 'Digital Wave', zh: 'Digital Wave' },
+      period: { en: 'Jun 2024 – Jul 2024', zh: '2024 年 6 月 – 7 月' },
+      bullets: {
+        en: [
+          'Developed front-end solutions using Flutter and React.',
+          'Integrated backend APIs for seamless client-server operations.',
+          'Contributed to a Dating App and a Transportation Management System.',
+        ],
+        zh: [
+          '使用 Flutter 與 React 開發前端方案。',
+          '整合後端 API，實現順暢的前後端協作。',
+          '參與開發交友應用程式與運輸管理系統。',
+        ],
       },
-      method: {
-        en: 'Use Astro content collections for Markdown posts, generate RSS and a sitemap, and build static pages through GitHub Actions. Check both languages and rendered text when upgrading the framework.',
-        zh: '以 Astro 內容集合管理 Markdown 文章，產生 RSS 與 sitemap，並由 GitHub Actions 建置靜態頁面。框架升級時檢查中英文頁面及實際顯示的文字。',
-      },
-      contribution: {
-        en: 'I set the requirements for the blog, site fixes and framework upgrade. An AI coding agent implemented and tested those changes.',
-        zh: '我提出網誌、網站修正與框架升級的需求；相關程式與測試由 AI coding agent 完成。',
-      },
-      result: {
-        en: 'The blog infrastructure, feed, sitemap and upgraded framework have been built and deployed. There are no published posts yet.',
-        zh: '網誌基礎功能、訂閱來源、sitemap 與框架升級已有建置及部署記錄，目前尚未發佈文章。',
+    },
+    {
+      role: { en: 'Software Testing Assistant', zh: '軟件測試助理' },
+      org: { en: 'Chinasoft', zh: 'Chinasoft' },
+      period: { en: 'Dec 2023 – Jan 2024', zh: '2023 年 12 月 – 2024 年 1 月' },
+      bullets: {
+        en: [
+          'Tested booking system functionality at Kai Tak Sports Park.',
+          'Created responsive email templates with HTML, CSS, and JavaScript.',
+          'Facilitated communication between front-end and back-end teams.',
+        ],
+        zh: [
+          '測試啟德體育園預約系統功能。',
+          '以 HTML、CSS、JavaScript 製作響應式電郵範本。',
+          '促進前端與後端團隊之間的溝通。',
+        ],
       },
     },
   ],
 };
 
-export const approach = {
-  title: { en: 'Engineering approach', zh: '工程方法' },
+export const projects = {
+  title: { en: 'Projects', zh: '專案' },
   items: [
     {
-      title: { en: 'Make failure states explicit', zh: '明確描述失敗狀態' },
-      body: {
-        en: 'An accepted request, a completed task and an uncertain delivery need different recovery paths. Define those states before choosing when to retry.',
-        zh: '請求已接收、任務已完成和交付結果不明，需要不同的恢復路徑。先定義狀態，再決定何時重試。',
+      name: { en: 'Folkbot — Self-hosted Family AI Agent', zh: 'Folkbot — 自架家庭 AI 代理' },
+      period: { en: 'Apr 2026 – Present', zh: '2026 年 4 月 – 至今' },
+      link: 'https://github.com/KSryanLEUNG/folkbot',
+      tags: ['Rust', 'SQLite', 'MCP', 'Agentic', 'Telegram', 'LLM'],
+      desc: {
+        en: [
+          'Designed, built, and open-sourced an always-on, self-hosted family AI agent in Rust: a single shared identity with persistent memory across household members and chat channels, shipped as a single binary backed by SQLite.',
+          'Engineered a three-tier memory architecture (durable facts, periodic summaries, sliding-window history) that keeps LLM context costs bounded over long-running use.',
+          'Implemented role-based access control with audited memory edits, multimodal Telegram integration (voice, photos, documents), MCP plugin extensibility, and provider-agnostic LLM support.',
+        ],
+        zh: [
+          '以 Rust 設計、開發並開源一個常駐、自架的家庭 AI 代理：跨家庭成員與聊天頻道共用單一身份與持久記憶，並以單一執行檔（搭配 SQLite）發佈。',
+          '設計三層記憶架構（持久事實、定期摘要、滑動視窗歷史），讓長期使用下的 LLM 上下文成本受控。',
+          '實作具審計記錄的角色權限控制、多模態 Telegram 整合（語音、相片、文件）、MCP 外掛擴充性，以及與供應商無關的 LLM 支援。',
+        ],
       },
     },
     {
-      title: { en: 'Keep authority separate from generated text', zh: '把權限與生成文字分開' },
-      body: {
-        en: 'A model’s answer or another agent’s report is data to inspect. Tool access and source permissions need their own enforceable checks.',
-        zh: '模型答案或其他 agent 的回報，是需要檢查的資料。工具授權與來源存取權，應有獨立且可執行的檢查。',
+      name: {
+        en: 'Locally Running Personal AI Assistant',
+        zh: '本地運行的個人 AI 助理',
+      },
+      period: { en: 'Final-year Project, 2024', zh: '畢業專題，2024' },
+      link: '',
+      tags: ['NLP', 'Transformers', 'RL', 'Agentic'],
+      desc: {
+        en: [
+          'Led development of a privacy-focused, locally running AI assistant using NLP, transformers, and reinforcement learning.',
+          'Pioneered an early agentic design enabling the assistant to operate the web browser autonomously — reading page content, navigating pages, and filling forms (e.g., live weather lookups) — before agentic AI became mainstream.',
+        ],
+        zh: [
+          '帶領開發一個注重私隱、於本地運行的 AI 助理，運用 NLP、Transformer 與強化學習。',
+          '率先採用早期的代理式設計，讓助理能自主操作瀏覽器——讀取頁面內容、跨頁導覽、填寫表單（例如即時天氣查詢）——早於代理式 AI 成為主流。',
+        ],
       },
     },
     {
-      title: { en: 'Match the claim to the evidence', zh: '讓主張與證據相稱' },
-      body: {
-        en: 'Use focused regressions to check a failure mode, then validate the real configuration and workflow. A passing local test supports that test’s scope; production acceptance needs separate evidence.',
-        zh: '以針對性的回歸測試檢查失敗情境，再驗證實際設定與流程。本機測試通過只支持該測試範圍，生產驗收需要另有證據。',
+      name: {
+        en: 'Typst-LLaMA — Open-source LLMs for Typst',
+        zh: 'Typst-LLaMA — 為 Typst 打造的開源 LLM',
+      },
+      period: { en: 'Group Project, 2024', zh: '小組專案，2024' },
+      link: '',
+      tags: ['LLaMA', 'Fine-tuning', 'Typst'],
+      desc: {
+        en: [
+          'Led the group to fine-tune the LLaMA LLM to comprehend and generate the new markup language Typst.',
+        ],
+        zh: [
+          '帶領小組微調 LLaMA 大型語言模型，使其能理解並生成新興標記語言 Typst。',
+        ],
       },
     },
   ],
 };
 
 export const skills = {
-  title: { en: 'Technical toolkit', zh: '技術工具' },
+  title: { en: 'Skills', zh: '技能' },
   groups: [
     {
-      label: { en: 'AI application logic', zh: 'AI 應用邏輯' },
-      items: ['Python'],
-      body: { en: 'Evidence handling, validation and regression checks.', zh: '證據處理、驗證與回歸檢查。' },
+      label: { en: 'Programming', zh: '程式語言' },
+      items: ['Python', 'Rust', 'C/C++', 'JavaScript', 'HTML/CSS'],
     },
     {
-      label: { en: 'Web delivery', zh: '網站交付' },
-      items: ['Astro', 'TypeScript', 'GitHub Actions'],
-      body: { en: 'Bilingual static pages, content publishing and automated builds.', zh: '雙語靜態頁面、內容發佈與自動建置。' },
+      label: { en: 'AI / ML', zh: 'AI／機器學習' },
+      items: [
+        'Large Language Models',
+        'Agentic AI (ReAct, MCP)',
+        'LangChain / LangGraph',
+        'Deep Learning',
+        'AWS Bedrock',
+        'NVIDIA NemoClaw',
+      ],
+    },
+    {
+      label: { en: 'Others', zh: '其他' },
+      items: ['Data Analysis', 'Database Management', 'AI-assisted Development', 'Git / GitHub'],
+    },
+    {
+      label: { en: 'Languages', zh: '語言' },
+      items: ['Cantonese (Native)', 'English (Proficient)', 'Mandarin (Proficient)'],
     },
   ],
 };
@@ -168,8 +221,8 @@ export const education = {
 export const contact = {
   title: { en: 'Contact', zh: '聯絡' },
   body: {
-    en: 'Interested in traceable AI systems, agent workflows or an engineering exchange? Feel free to get in touch.',
-    zh: '歡迎交流可追溯的 AI 系統、agent 工作流程與相關工程問題。',
+    en: 'Open to opportunities in agentic AI development and research. Feel free to reach out.',
+    zh: '歡迎洽談代理式 AI 開發與研究相關機會，隨時與我聯絡。',
   },
   emailLabel: { en: 'Email', zh: '電郵' },
   githubLabel: { en: 'GitHub', zh: 'GitHub' },
