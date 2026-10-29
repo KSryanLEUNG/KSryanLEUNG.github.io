@@ -9,6 +9,27 @@ export async function getPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
+// One entry per article; translations sharing a translationKey are grouped so
+// lists show a single item that follows the reader's language.
+export type PostGroup = { key: string; date: Date; byLang: Partial<Record<'en' | 'zh', Post>> };
+
+export function groupPosts(posts: Post[]): PostGroup[] {
+  const groups = new Map<string, PostGroup>();
+  for (const post of posts) {
+    const key = post.data.translationKey ?? post.id;
+    const group = groups.get(key) ?? { key, date: post.data.pubDate, byLang: {} };
+    group.byLang[post.data.lang] = post;
+    if (post.data.pubDate > group.date) group.date = post.data.pubDate;
+    groups.set(key, group);
+  }
+  return [...groups.values()].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+}
+
+export function translationsOf(post: Post, posts: Post[]): Post[] {
+  const key = post.data.translationKey;
+  return key ? posts.filter((p) => p.data.translationKey === key && p.id !== post.id) : [];
+}
+
 // Latin text is counted in words, CJK text in characters (~200 words or
 // ~400 characters per minute).
 export function readingMinutes(markdown: string): number {
@@ -48,4 +69,6 @@ export const blogCopy = {
   },
   tagged: { en: 'Tagged', zh: '標籤' },
   rss: { en: 'RSS feed', zh: 'RSS 訂閱' },
+  // Shown on a post, in the language of the version it links to.
+  readIn: { en: 'Read in English →', zh: '閱讀中文版 →' },
 };

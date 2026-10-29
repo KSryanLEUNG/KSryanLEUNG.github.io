@@ -2,8 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import PostMeta from '../components/PostMeta.astro';
-import { getPosts, blogCopy } from '../lib/blog';
+import PostEntry from '../components/PostEntry.astro';
+import { getPosts, groupPosts, blogCopy } from '../lib/blog';
 import {
   site,
   nav,
@@ -16,7 +16,7 @@ import {
   contact,
 } from '../data/content';
 
-const latestPosts = (await getPosts()).slice(0, 3);
+const latestPosts = groupPosts(await getPosts()).slice(0, 3);
 
 const personLd = {
   '@context': 'https://schema.org',
@@ -167,15 +167,7 @@ const personLd = {
             <span data-lang-en>{blogCopy.latest.en}</span><span data-lang-zh>{blogCopy.latest.zh}</span>
           </h2>
           <ul class="post-list">
-            {latestPosts.map((post) => (
-              <li class="post-item">
-                <h3 lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>
-                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-                </h3>
-                <p lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>{post.data.description}</p>
-                <PostMeta post={post} showTags={false} />
-              </li>
-            ))}
+            {latestPosts.map((group) => <PostEntry group={group} heading="h3" showTags={false} />)}
           </ul>
           <p><a href="/blog/"><span data-lang-en>{blogCopy.all.en}</span><span data-lang-zh>{blogCopy.all.zh}</span></a></p>
         </div>

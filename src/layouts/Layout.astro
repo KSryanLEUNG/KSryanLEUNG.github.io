@@ -10,8 +10,10 @@ interface Props {
   modifiedTime?: Date;
   // Error pages are not indexed and have no canonical URL.
   noindex?: boolean;
+  // Language versions of this page (including itself), for hreflang.
+  alternates?: { hreflang: string; href: string }[];
 }
-const { title, description, type = 'website', publishedTime, modifiedTime, noindex = false } = Astro.props;
+const { title, description, type = 'website', publishedTime, modifiedTime, noindex = false, alternates = [] } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -27,6 +29,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={`${site.name.en} — Blog`} href="/rss.xml" />
+    {alternates.length > 1 && alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
 
     <!-- Open Graph -->
     <meta property="og:type" content={type} />

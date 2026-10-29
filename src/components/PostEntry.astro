@@ -1,0 +1,27 @@
+---
+import PostMeta from './PostMeta.astro';
+import type { PostGroup, Post } from '../lib/blog';
+
+interface Props {
+  group: PostGroup;
+  heading?: 'h2' | 'h3';
+  showTags?: boolean;
+}
+const { group, heading = 'h2', showTags = true } = Astro.props;
+const { en, zh } = group.byLang;
+// With both languages present, each version is shown only in its own UI language.
+const versions: [Post, 'en' | 'zh' | null][] = en && zh ? [[en, 'en'], [zh, 'zh']] : [[(en ?? zh)!, null]];
+const Heading = heading;
+---
+
+<li class="post-item">
+  {versions.map(([post, uiLang]) => (
+    <div data-lang-en={uiLang === 'en' ? '' : undefined} data-lang-zh={uiLang === 'zh' ? '' : undefined}>
+      <Heading lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>
+        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+      </Heading>
+      <p lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>{post.data.description}</p>
+      <PostMeta post={post} showTags={showTags} />
+    </div>
+  ))}
+</li>

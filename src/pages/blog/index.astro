@@ -2,10 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import PostMeta from '../../components/PostMeta.astro';
-import { getPosts, blogCopy } from '../../lib/blog';
+import PostEntry from '../../components/PostEntry.astro';
+import { getPosts, groupPosts, blogCopy } from '../../lib/blog';
 
-const posts = await getPosts();
+const groups = groupPosts(await getPosts());
 ---
 
 <Layout
@@ -27,21 +27,13 @@ const posts = await getPosts();
 
     <section>
       <div class="wrap">
-        {posts.length === 0 ? (
+        {groups.length === 0 ? (
           <p class="empty-note">
             <span data-lang-en>{blogCopy.empty.en}</span><span data-lang-zh>{blogCopy.empty.zh}</span>
           </p>
         ) : (
           <ul class="post-list">
-            {posts.map((post) => (
-              <li class="post-item">
-                <h2 lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>
-                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-                </h2>
-                <p lang={post.data.lang === 'zh' ? 'zh-HK' : 'en'}>{post.data.description}</p>
-                <PostMeta post={post} />
-              </li>
-            ))}
+            {groups.map((group) => <PostEntry group={group} />)}
           </ul>
         )}
       </div>

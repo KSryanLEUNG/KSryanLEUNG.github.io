@@ -14,6 +14,8 @@ const blog = defineCollection({
     updatedDate: z.coerce.date().optional(),
     lang: z.enum(['en', 'zh']).default('en'),
     tags: z.array(z.string()).default([]),
+    // Posts that share a translationKey are the same article in different languages.
+    translationKey: z.string().optional(),
     // Drafts are visible in `npm run dev` but excluded from the production build.
     draft: z.boolean().default(false),
   }),
