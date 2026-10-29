@@ -235,8 +235,12 @@ const cityCount = places.length;
     stroke: var(--map-stroke);
     stroke-width: 0.4;
   }
+  /* The accent outline keeps small visited countries (e.g. South Korea)
+     readable next to a city marker. */
   :global(.globe-country.visited) {
     fill: var(--map-visited);
+    stroke: color-mix(in srgb, var(--accent) 70%, transparent);
+    stroke-width: 0.7;
   }
   :global(.dot-core) {
     fill: var(--dot);
@@ -266,8 +270,8 @@ const cityCount = places.length;
     r: 7;
   }
   @keyframes dotpulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(3.2); opacity: 0; }
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(2.2); opacity: 0; }
   }
 
   /* destination list */
